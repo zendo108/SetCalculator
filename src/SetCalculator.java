@@ -17,6 +17,7 @@ public class SetCalculator
     Scanner scanner = new Scanner(System.in);  // Create a Scanner object
     String userStringIn = scanner.nextLine();  // Read user input
     String regexString = "\\[\\d{1,2}(,\\d{1,2})*\\](\\+|\\*|\\-)\\[\\d{1,2}(,\\d{1,2})+\\]";
+    //check if string matches the syntax
     while(!Pattern.matches(regexString, userStringIn)){
       if(userStringIn.matches("Q")){
         scanner.close();
@@ -31,16 +32,17 @@ public class SetCalculator
     System.out.println("User input String is: " + userStringIn);  // Output user input
 
     int operatorIndex = 0;
+    //put characters into array
     char[] userCharsArray = userStringIn.toCharArray();
     for (int i = 0; i < userCharsArray.length; i ++) {
-
+      //look for the operator
         char c = userStringIn.toCharArray()[i];
         if(c == '+' || c == '*' || c == '-'){
             operatorIndex = i;
             break;
         }
     }
-    
+    //build set a
     Set<Integer> a = new TreeSet<Integer>();
     for(int i = 1; i < operatorIndex-1; i ++){
         if(userCharsArray[i] != ','){
@@ -48,13 +50,14 @@ public class SetCalculator
         }
       
     }
+    //build set b
     Set<Integer> b = new TreeSet<Integer>();
     for(int i = operatorIndex + 2; i < userCharsArray.length-1; i ++){
       if(userCharsArray[i] != ','){
             b.add(Integer.parseInt(String.valueOf(userCharsArray[i])));
         }
     }
-    
+    //select the right operation
     switch(userCharsArray[operatorIndex]){
         case '+':
             // To find union 
